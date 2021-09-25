@@ -45,3 +45,17 @@ class TestTree(TestCase):
 
         parent.save()
 
+    def test_create_2_layers_too_many_chldren(self):
+        parent = Node.objects.create()
+        tree = Tree.objects.create(parent_node=parent)
+
+        child_parent = Node.objects.create(parent=parent)
+        child2 = Node.objects.create(parent=parent)
+        child3 = Node.objects.create(parent=parent)
+
+        child1_1 = Node.objects.create(parent=child_parent)
+        child1_2 = Node.objects.create(parent=child_parent)
+        child1_3 = Node.objects.create(parent=child_parent)
+        with self.assertRaises(ValidationError):
+            child1_3 = Node.objects.create(parent=child_parent)
+

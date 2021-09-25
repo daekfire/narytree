@@ -8,9 +8,9 @@ class Node(models.Model):
     def save(self, *args, **kwargs):
         if self.parent and self.parent.children.count() >= 3 and self.pk is None:
             raise ValidationError("Too many children")
-
-        if self.children.count() > 3:
-            raise ValidationError("Too many children")
+        #
+        # if self.children.count() > 3:
+        #     raise ValidationError("Too many children")
 
         return super(Node, self).save(*args, **kwargs)
 
